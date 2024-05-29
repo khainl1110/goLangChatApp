@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
@@ -46,6 +47,7 @@ func main() {
 	// print("____________")
 	// pullMsg("api-project-70002766628", "test-subscription")
 	router := gin.Default()
+	router.Use(cors.Default())
 
 	router.POST("/sendMsg", postMsgReq)
 	router.GET("/getMsg", getMsg)
