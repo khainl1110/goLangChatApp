@@ -8,13 +8,12 @@ import (
 	"cloud.google.com/go/pubsub"
 )
 
-func publishMsg(projectID, topicID, msg string) error {
-	// fmt.Print("test")
+func publishMsg(projectID, topicID, msg string) string {
 	ctx := context.Background()
 	client, err := pubsub.NewClient(ctx, projectID)
 	if err != nil {
 		fmt.Print("error!")
-		return err
+		return err.Error()
 	}
 	defer client.Close()
 
@@ -40,11 +39,11 @@ func publishMsg(projectID, topicID, msg string) error {
 	// ID is returned for the published message.
 	id, err := result.Get(ctx)
 	if err != nil {
-		fmt.Errorf("pubsub: result.Get: %w", err)
+		return err.Error()
 	}
 
 	fmt.Println("Published a message; msg ID: ", id)
-	return nil
+	return msg
 }
 
 func pullMsg(projectID, subID string) string {
